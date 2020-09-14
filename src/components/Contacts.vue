@@ -47,8 +47,8 @@
                 };
                 this.$http.get("/api/3/contacts?status=-1&orders[email]=ASC", axiosConfig).then((response) => {
                     this.data = response.data.contacts;
-                    let jsonToString = JSON.stringify(this.data, null, 4);
-                    console.log('duty status recap ' + jsonToString);
+                    // let jsonToString = JSON.stringify(this.data, null, 4);
+                    // console.log('duty status recap ' + jsonToString);
                 }).catch((error) => {
                     console.error(error)
                 });

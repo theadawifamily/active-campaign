@@ -145,7 +145,7 @@
 
     .initials {
         position: absolute;
-        left: 98px;
+        left: 97px;
         width: 12px;
         height: 16px;
         font-family: IBM Plex Sans;
