@@ -1,14 +1,8 @@
 <template>
     <div>
         <div class="data-row" v-bind:style="getTopPosition(top)"></div>
-        <template v-if="checkboxValue">
-            <input v-model="checkboxValue" checked @click="preventThisClickEvent" type="checkbox" class="checkbox"
-                   v-bind:style="getTopPosition(initialCheckboxPosition)">
-        </template>
-        <template v-else>
-            <input v-model="checkboxValue" @click="preventThisClickEvent" type="checkbox" class="checkbox"
-                   v-bind:style="getTopPosition(initialCheckboxPosition)">
-        </template>
+        <input v-model="checkboxValue" @click="preventThisClickEvent" type="checkbox" class="checkbox"
+               v-bind:style="getTopPosition(initialCheckboxPosition)">
         <template v-if="doesNameExist(data)">
             <div class="icon" v-bind:style="getTopPosition(initialIconPosition)"></div>
             <div class="initials" v-bind:style="getTopPosition(initialsPosition)">{{data|getInitials}}</div>
