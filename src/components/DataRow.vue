@@ -1,7 +1,12 @@
 <template>
     <div>
         <div class="data-row" v-bind:style="getTopPosition(top)"></div>
-        <input type="checkbox" class="checkbox" v-bind:style="getTopPosition(initialCheckboxPosition)">
+        <template v-if="checkboxValue">
+            <input checked type="checkbox" class="checkbox" v-bind:style="getTopPosition(initialCheckboxPosition)">
+        </template>
+        <template v-else>
+            <input disabled type="checkbox" class="checkbox" v-bind:style="getTopPosition(initialCheckboxPosition)">
+        </template>
         <template v-if="doesNameExist(data)">
             <div class="icon" v-bind:style="getTopPosition(initialIconPosition)"></div>
             <div class="initials" v-bind:style="getTopPosition(initialsPosition)">{{data|getInitials}}</div>
@@ -45,6 +50,9 @@
             },
             initialIconPosition: {
                 required: true,
+            },
+            checkboxValue: {
+                type: Boolean
             },
         },
         data() {
@@ -105,7 +113,7 @@
                 return {
                     'top': topPosition + 'px',
                 }
-            }
+            },
         }
     }
 </script>

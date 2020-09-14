@@ -1,6 +1,8 @@
 <template>
     <div class="container">
-        <TableHeader/>
+        <TableHeader
+                @getCheckboxStatus="checkboxStatus=$event">
+        </TableHeader>
         <div v-for="(value, key) in data" :key="key">
             <DataRow
                     :data="value"
@@ -10,6 +12,7 @@
                     :initialsPosition=109
                     :initialIconPosition=107
                     :index=key
+                    :checkboxValue="checkboxStatus"
             >
             </DataRow>
         </div>
@@ -25,6 +28,7 @@
         data() {
             return {
                 data: [],
+                checkboxStatus: false,
             }
         },
         created() {
@@ -47,8 +51,6 @@
                 };
                 this.$http.get("/api/3/contacts?status=-1&orders[email]=ASC", axiosConfig).then((response) => {
                     this.data = response.data.contacts;
-                    // let jsonToString = JSON.stringify(this.data, null, 4);
-                    // console.log('duty status recap ' + jsonToString);
                 }).catch((error) => {
                     console.error(error)
                 });

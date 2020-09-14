@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="table-header"></div>
-        <input type="checkbox" class="checkbox">
+        <input @click="changeCheckBoxStatus" type="checkbox" class="checkbox">
         <div class="name">Name</div>
         <div class="email">Email</div>
         <div class="account">Account</div>
@@ -11,7 +11,23 @@
 
 <script>
     export default {
-        name: "TableHeader"
+        name: "TableHeader",
+        data() {
+            return {
+                checkBoxEnabled: false,
+            }
+        },
+        methods: {
+            changeCheckBoxStatus() {
+                if(this.checkBoxEnabled === false){
+                    this.checkBoxEnabled = true;
+                }else{
+                    this.checkBoxEnabled = false;
+                }
+                this.$emit('getCheckboxStatus', this.checkBoxEnabled);
+                //console.log('update to '+this.checkBoxStatus);
+            },
+        },
     }
 </script>
 
