@@ -18,14 +18,12 @@
             }
         },
         methods: {
+            /**
+             * Changes checkbox status and adds a listener for the parent component
+             */
             changeCheckBoxStatus() {
-                if(this.checkBoxEnabled === false){
-                    this.checkBoxEnabled = true;
-                }else{
-                    this.checkBoxEnabled = false;
-                }
+                this.checkBoxEnabled = !(this.checkBoxEnabled);
                 this.$emit('getCheckboxStatus', this.checkBoxEnabled);
-                //console.log('update to '+this.checkBoxStatus);
             },
         },
     }
@@ -42,8 +40,6 @@
         /* white */
 
         background: #FFFFFF;
-        /* slate-200 */
-
         border: 1px solid #CED3E0;
         box-sizing: border-box;
     }
@@ -54,16 +50,11 @@
         height: 16px;
         left: 749px;
         top: 72px;
-
         font-family: IBM Plex Sans;
         font-style: normal;
         font-weight: 500;
         font-size: 12px;
         line-height: 16px;
-        /* identical to box height, or 133% */
-
-        /* slate-400 */
-
         color: #5F667E;
     }
 
@@ -79,11 +70,6 @@
         font-weight: 500;
         font-size: 12px;
         line-height: 16px;
-        /* identical to box height, or 133% */
-
-
-        /* slate-400 */
-
         color: #5F667E;
     }
 
@@ -99,11 +85,6 @@
         font-weight: 500;
         font-size: 12px;
         line-height: 16px;
-        /* identical to box height, or 133% */
-
-
-        /* slate-400 */
-
         color: #5F667E;
     }
 
@@ -118,11 +99,6 @@
         font-weight: 500;
         font-size: 12px;
         line-height: 16px;
-        /* identical to box height, or 133% */
-
-
-        /* slate-400 */
-
         color: #5F667E;
     }
 
@@ -131,12 +107,10 @@
         left: 6.62%;
         right: 92.18%;
         top: 13.4%;
-        /*bottom: 79.86%;*/
 
         /* White 100 - FFFFFF */
 
         background: #FFFFFF;
-        /* Slate 40 - CED3E0 */
 
         border: 1px solid #CED3E0;
         box-sizing: border-box;

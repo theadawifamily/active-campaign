@@ -2,10 +2,12 @@
     <div>
         <div class="data-row" v-bind:style="getTopPosition(top)"></div>
         <template v-if="checkboxValue">
-            <input checked type="checkbox" class="checkbox" v-bind:style="getTopPosition(initialCheckboxPosition)">
+            <input v-model="checkboxValue" checked @click="preventThisClickEvent" type="checkbox" class="checkbox"
+                   v-bind:style="getTopPosition(initialCheckboxPosition)">
         </template>
         <template v-else>
-            <input disabled type="checkbox" class="checkbox" v-bind:style="getTopPosition(initialCheckboxPosition)">
+            <input v-model="checkboxValue" @click="preventThisClickEvent" type="checkbox" class="checkbox"
+                   v-bind:style="getTopPosition(initialCheckboxPosition)">
         </template>
         <template v-if="doesNameExist(data)">
             <div class="icon" v-bind:style="getTopPosition(initialIconPosition)"></div>
@@ -26,6 +28,11 @@
 <script>
     export default {
         name: "DataRow",
+        data() {
+            return {
+                defaultTopPosition: 45,
+            }
+        },
         props: {
             data: {
                 required: true,
@@ -41,53 +48,76 @@
             },
             index: {
                 required: true,
+                type: Number,
             },
             initialCheckboxPosition: {
                 required: true,
+                type: Number,
             },
             initialsPosition: {
                 required: true,
+                type: Number,
             },
             initialIconPosition: {
                 required: true,
+                type: Number,
             },
             checkboxValue: {
                 type: Boolean
             },
         },
-        data() {
-            return {}
-        },
-        created() {
 
-        },
-        mounted() {
-            //this.displayData();
-        },
         filters: {
+            /**
+             * Returns contact's full name if both first and last names exist
+             * Defaults to "--"
+             * @param value
+             * @returns {string}
+             */
             formatName(value) {
-                if (value.firstName != '' && value.lastName != '') {
+                if (Object.keys(value.firstName).length > 0 && Object.keys(value.lastName).length > 0) {
                     return value.firstName + ' ' + value.lastName;
                 } else {
                     return '--';
                 }
             },
+
+            /**
+             * Returns initials based on first and last names
+             * Defaults to null
+             * @param value
+             * @returns {string}
+             */
             getInitials(value) {
-                if (value.firstName != '' && value.lastName != '') {
-                    return value.firstName[0] + value.lastName[0];
+                if (Object.keys(value.firstName).length > 0 && Object.keys(value.lastName).length > 0) {
+                    return value.firstName[0].toUpperCase() + value.lastName[0].toUpperCase();
                 } else {
-                    return null;
+                    return '';
                 }
             },
+
+            /**
+             * Returns contact's organization if it exists
+             * Defaults to "--"
+             * @param value
+             * @returns {string}
+             */
             getOrgName(value) {
-                if (value.orgname != '') {
+                if (Object.keys(value.orgname).length > 0) {
                     return value.orgname;
                 } else {
                     return '--';
                 }
             },
+
+            /**
+             * Returns contact's phone if it exists
+             * Defaults to "--"
+             * @param value
+             * @returns {string}
+             */
             getPhone(value) {
-                if (value.phone != '') {
+                if (Object.keys(value.phone).length > 0) {
                     let phone = value.phone;
                     return phone.replace(/[^0-9]/g, '')
                         .replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
@@ -97,17 +127,36 @@
             },
         },
         methods: {
+            /**
+             * Prevents a checkbox from being checked/unchecked.
+             * This is needed because as part of the requirements, we can only check/uncheck checboxes from the
+             * row header checkbox only.
+             * @param e
+             */
+            preventThisClickEvent(e) {
+                e.preventDefault();
+            },
+            /**
+             * Checks if a name does exist
+             * @param contact
+             * @returns {boolean}
+             */
             doesNameExist(contact) {
-                if (contact.firstName != '' && contact.lastName != '') {
+                if (Object.keys(contact.firstName).length > 0 && Object.keys(contact.lastName).length > 0) {
                     return true;
                 } else {
                     return false;
                 }
             },
+            /**
+             * Returns proper position for a DOM element based on index
+             * @param top
+             * @returns {{top: string}}
+             */
             getTopPosition(top) {
                 let topPosition = top;
                 if (this.index !== 0) {
-                    topPosition = top + (this.index * 45);
+                    topPosition = top + (this.index * this.defaultTopPosition);
                 }
 
                 return {
@@ -161,9 +210,6 @@
         font-weight: 600;
         font-size: 11px;
         line-height: 16px;
-
-        /* Slate 120 - 1F2129 */
-
         color: #1F2129;
     }
 
@@ -172,17 +218,11 @@
         width: 105px;
         height: 16px;
         left: 749px;
-
         font-family: IBM Plex Sans;
         font-style: normal;
         font-weight: normal;
         font-size: 12px;
         line-height: 16px;
-        /* identical to box height, or 133% */
-
-
-        /* slate-400 */
-
         color: #5F667E;
     }
 
@@ -191,17 +231,11 @@
         width: 105px;
         height: 16px;
         left: 523px;
-
         font-family: IBM Plex Sans;
         font-style: normal;
         font-weight: normal;
         font-size: 12px;
         line-height: 16px;
-        /* identical to box height, or 133% */
-
-
-        /* Slate 120 #1F2129 */
-
         color: #1F2129;
     }
 
@@ -209,7 +243,7 @@
         position: absolute;
         width: 147px;
         height: 16px;
-        left: 147px;
+        left: 122px;
         top: 25%;
 
         font-family: IBM Plex Sans;
@@ -217,11 +251,6 @@
         font-weight: normal;
         font-size: 12px;
         line-height: 16px;
-        /* identical to box height, or 133% */
-
-
-        /* slate-600 */
-
         color: #1F2129;
     }
 
@@ -236,11 +265,6 @@
         font-weight: normal;
         font-size: 12px;
         line-height: 16px;
-        /* identical to box height, or 133% */
-
-
-        /* ocean-500 */
-
         color: #356AE6;
     }
 
@@ -255,11 +279,6 @@
         font-weight: normal;
         font-size: 12px;
         line-height: 16px;
-        /* identical to box height, or 133% */
-
-
-        /* ocean-500 */
-
         color: #356AE6;
     }
 

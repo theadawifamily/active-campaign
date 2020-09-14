@@ -31,9 +31,6 @@
                 checkboxStatus: false,
             }
         },
-        created() {
-
-        },
         mounted() {
             this.getData();
         },
